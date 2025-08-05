@@ -355,7 +355,11 @@ function loadGallery(pushHistory = true) {
   document.getElementById("photoModal").style.display = "none";
 
   if (pushHistory) {
-    google.script.run.withSuccessHandler(renderGallery).getAlbumList();
+    fetch("https://script.google.com/macros/s/AKfycbz6BB3b3Qd0qWGa7FgvwkHglhJya1tmpn-8gabyjxVrhdYFXRS1UrCXAMWxN4Y8ohaMtw/exec") // 🔁 use your actual script URL
+  .then(response => response.json())
+  .then(data => renderGallery(data))
+  .catch(err => console.error("Failed to load albums:", err));
+
     history.replaceState({ view: "gallery" }, "Gallery View");
   } else {
     renderGallery(albumData); // ✅ Use cached data instead of refetching
@@ -369,3 +373,4 @@ function loadGallery(pushHistory = true) {
 
 </body>
 </html>
+
